@@ -1,30 +1,19 @@
-package com.example.zongyuanyang.renlianceshi;
+package com.example.zongyuanyang.renlianceshi.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
-import android.graphics.YuvImage;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SurfaceView;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.example.zongyuanyang.renlianceshi.R;
 
-import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
-import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -33,17 +22,10 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
-
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-
-import static org.opencv.imgproc.Imgproc.rectangle;
-
-public class MainActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener {
+public class DiscernActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener {
     JavaCameraView openCvCameraView;
     private CascadeClassifier cascadeClassifier;
     private Mat grayscaleImage;
@@ -75,10 +57,12 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        setContentView(R.layout.activity_discern);
         openCvCameraView = (JavaCameraView) findViewById(R.id.jcv);
-        openCvCameraView.setCameraIndex(-1);
         openCvCameraView.setCvCameraViewListener(this);
+
 
     }
 
@@ -94,24 +78,18 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
     @Override
     public void onCameraViewStarted(int width, int height) {
         grayscaleImage = new Mat(height, width, CvType.CV_8UC4);
-
-
-        // The faces will be a 20% of the height of the screen
         absoluteFaceSize = (int) (height * 0.2);
     }
-
+    private Mat mRgba;
+    private Mat mGray;
     @Override
     public void onCameraViewStopped() {
     }
-
     @Override
     public Mat onCameraFrame(Mat aInputFrame) {
 
-        // Create a grayscale image
         Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
         MatOfRect faces = new MatOfRect();
-
-        // Use the classifier to detect faces
         if (cascadeClassifier != null) {
             cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
                     new Size(absoluteFaceSize, absoluteFaceSize), new Size());
@@ -123,10 +101,21 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
 
         for (int i = 0; i < facesArray.length; i++) {
             Imgproc.rectangle(aInputFrame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
+            // saveImage(aInputFrame,new Rect(facesArray[i].tl(), facesArray[i].br()),"zongyuan");
+
         }
         return aInputFrame;
     }
-
-
+    public void saveImage(Mat matrix, Rect rect, String fileName) {
+        // int type = BufferedImage.TYPE_BYTE_GRAY;
+//        Mat sub = matrix.submat(rect);
+//        Bitmap bitmap=Bitmap.createBitmap(100,100, Bitmap.Config.RGB_565);
+//        Utils.matToBitmap(matrix,bitmap);
+//        if(bitmap==null){
+//            Log.i("aaa","bitmap  is null ******");
+//            return;
+//        }
+//        imageView.setImageBitmap(bitmap);
+    }
 
 }
