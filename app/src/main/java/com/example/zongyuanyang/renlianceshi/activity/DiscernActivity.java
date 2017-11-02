@@ -156,34 +156,41 @@ public class DiscernActivity extends Activity implements CameraBridgeViewBase.Cv
 
         return aInputFrame;
     }
-    private void AA(final Mat mat){
-        Log.i("aaa","******************11111111111111************");
-        bmp = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(mat, bmp);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                iv_imageview1.setVisibility(View.VISIBLE);
-                iv_imageview1.setImageBitmap(bmp);
-                mat.convertTo(mat, CvType.CV_32F);
+    //Mat类型 裁剪
+    private void AA( Mat mat){
 
-                Log.i("aaa","******************33333333333333************");
-                arrayList.get(0).convertTo(arrayList.get(0), CvType.CV_32F);
-                double target = Imgproc.compareHist(mat, mat, Imgproc.CV_COMP_CORREL);
-                Log.e("aaaa", "相似度 ：   ==" + target);
-                Log.i("aaa","******************44444444444************");
-//                    for(int i=0;i<arrayList.size();i++){
-//                        Log.i("aaa","******************33333333333333************");
-//                        arrayList.get(i).convertTo(arrayList.get(i), CvType.CV_32F);
-//                        double target = Imgproc.compareHist(mat, arrayList.get(i), Imgproc.CV_COMP_CORREL);
-//                        Log.e("aaaa", "相似度 ：   ==" + target);
-//                        //Toast.makeText(this, "相似度 ：   ==" + target, Toast.LENGTH_SHORT).show();
-//                    }
-                isJiance=true;
-            }
-        });
 
     }
+
+    //Mat 类型相似度比较
+//    private void AA(final Mat mat){
+//        Log.i("aaa","******************11111111111111************");
+//        bmp = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
+//        Utils.matToBitmap(mat, bmp);
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                iv_imageview1.setVisibility(View.VISIBLE);
+//                iv_imageview1.setImageBitmap(bmp);
+//                mat.convertTo(mat, CvType.CV_32F);
+//
+//                Log.i("aaa","******************33333333333333************");
+//                arrayList.get(0).convertTo(arrayList.get(0), CvType.CV_32F);
+//                double target = Imgproc.compareHist(mat, mat, Imgproc.CV_COMP_CORREL);
+//                Log.e("aaaa", "相似度 ：   ==" + target);
+//                Log.i("aaa","******************44444444444************");
+////                    for(int i=0;i<arrayList.size();i++){
+////                        Log.i("aaa","******************33333333333333************");
+////                        arrayList.get(i).convertTo(arrayList.get(i), CvType.CV_32F);
+////                        double target = Imgproc.compareHist(mat, arrayList.get(i), Imgproc.CV_COMP_CORREL);
+////                        Log.e("aaaa", "相似度 ：   ==" + target);
+////                        //Toast.makeText(this, "相似度 ：   ==" + target, Toast.LENGTH_SHORT).show();
+////                    }
+//                isJiance=true;
+//            }
+//        });
+//
+//    }
     public void BB(View view){
         iv_imageview1.setVisibility(View.GONE);
         isJiance=false;
