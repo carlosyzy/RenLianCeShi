@@ -137,37 +137,52 @@ public class DiscernActivity extends Activity implements CameraBridgeViewBase.Cv
             //saveImage(aInputFrame,new Rect(facesArray[i].tl(), facesArray[i].br()),"discern00_"+i);
 
         }
-        if(faceCount>0){
-            if(!isJiance){
-                AA(aInputFrame);
-                isJiance=true;
-            }
+
+        if(!isJiance){
+            Log.i("aaa","******************0000000000000000************");
+            Bitmap bitmap1=BitmapFactory.decodeResource(getResources(),R.mipmap.img1);
+            Mat mat_src1 = new Mat(bitmap1.getWidth(), bitmap1.getHeight(), CvType.CV_8UC4);
+            Utils.bitmapToMat(bitmap1, mat_src1);
+
+            Mat mat11 = new Mat();
+            Imgproc.cvtColor(mat_src1, mat11, Imgproc.COLOR_BGR2GRAY);
+            AA(mat11);
+
         }
+
 
 
 
 
         return aInputFrame;
     }
-    private void AA(Mat mat){
+    private void AA(final Mat mat){
+        Log.i("aaa","******************11111111111111************");
         bmp = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(mat, bmp);
         runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    iv_imageview1.setVisibility(View.VISIBLE);
-                    iv_imageview1.setImageBitmap(bmp);
-                }
-            });
-        mat.convertTo(mat, CvType.CV_32F);
+            @Override
+            public void run() {
+                iv_imageview1.setVisibility(View.VISIBLE);
+                iv_imageview1.setImageBitmap(bmp);
+                mat.convertTo(mat, CvType.CV_32F);
 
-        for(int i=0;i<arrayList.size();i++){
+                Log.i("aaa","******************33333333333333************");
+                arrayList.get(0).convertTo(arrayList.get(0), CvType.CV_32F);
+                double target = Imgproc.compareHist(mat, mat, Imgproc.CV_COMP_CORREL);
+                Log.e("aaaa", "相似度 ：   ==" + target);
+                Log.i("aaa","******************44444444444************");
+//                    for(int i=0;i<arrayList.size();i++){
+//                        Log.i("aaa","******************33333333333333************");
+//                        arrayList.get(i).convertTo(arrayList.get(i), CvType.CV_32F);
+//                        double target = Imgproc.compareHist(mat, arrayList.get(i), Imgproc.CV_COMP_CORREL);
+//                        Log.e("aaaa", "相似度 ：   ==" + target);
+//                        //Toast.makeText(this, "相似度 ：   ==" + target, Toast.LENGTH_SHORT).show();
+//                    }
+                isJiance=true;
+            }
+        });
 
-            arrayList.get(i).convertTo(arrayList.get(i), CvType.CV_32F);
-            double target = Imgproc.compareHist(mat, arrayList.get(i), Imgproc.CV_COMP_CORREL);
-            Log.e("aaaa", "相似度 ：   ==" + target);
-            Toast.makeText(this, "相似度 ：   ==" + target, Toast.LENGTH_SHORT).show();
-        }
     }
     public void BB(View view){
         iv_imageview1.setVisibility(View.GONE);
