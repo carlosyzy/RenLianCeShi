@@ -21,6 +21,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -121,22 +122,22 @@ public class DiscernActivity extends Activity implements CameraBridgeViewBase.Cv
     @Override
     public Mat onCameraFrame(Mat aInputFrame) {
 
-        Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
-        MatOfRect faces = new MatOfRect();
-        if (cascadeClassifier != null) {
-            cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
-                    new Size(absoluteFaceSize, absoluteFaceSize), new Size());
-        }
-
-        // If there are any faces found, draw a rectangle around it
-        Rect[] facesArray = faces.toArray();
-        int faceCount = facesArray.length;
-
-        for (int i = 0; i < facesArray.length; i++) {
-            Imgproc.rectangle(aInputFrame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
-            //saveImage(aInputFrame,new Rect(facesArray[i].tl(), facesArray[i].br()),"discern00_"+i);
-
-        }
+//        Imgproc.cvtColor(aInputFrame, grayscaleImage, Imgproc.COLOR_RGBA2RGB);
+//        MatOfRect faces = new MatOfRect();
+//        if (cascadeClassifier != null) {
+//            cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
+//                    new Size(absoluteFaceSize, absoluteFaceSize), new Size());
+//        }
+//
+//        // If there are any faces found, draw a rectangle around it
+//        Rect[] facesArray = faces.toArray();
+//        int faceCount = facesArray.length;
+//
+//        for (int i = 0; i < facesArray.length; i++) {
+//            Imgproc.rectangle(aInputFrame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
+//            //saveImage(aInputFrame,new Rect(facesArray[i].tl(), facesArray[i].br()),"discern00_"+i);
+//
+//        }
 
         if(!isJiance){
             Log.i("aaa","******************0000000000000000************");
@@ -158,8 +159,36 @@ public class DiscernActivity extends Activity implements CameraBridgeViewBase.Cv
     }
     //Mat类型 裁剪
     private void AA( Mat mat){
+        MatOfRect faces1 = new MatOfRect();
+        //cascadeClassifier.de
+
+        cascadeClassifier.detectMultiScale(mat, faces1);
+        final Rect[] facesArray1 = faces1.toArray();
+        int faceCount = facesArray1.length;
+        Log.i("aaa","****************"+faceCount);
+
+        for (int i = 0; i < facesArray1.length; i++) {
+            Imgproc.rectangle(mat, facesArray1[i].tl(), facesArray1[i].br(), new Scalar(0, 255, 0, 255), 3);
+            //saveImage(aInputFrame,new Rect(facesArray[i].tl(), facesArray[i].br()),"discern00_"+i);
+            bmp = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
+
+            Utils.matToBitmap(mat, bmp);
 
 
+            final Bitmap bitmap1=Bitmap.createBitmap(bmp,(int)(facesArray1[i].tl().x),(int)(facesArray1[i].tl().y),
+                    (int)(facesArray1[i].br().x-facesArray1[i].tl().x),(int)(facesArray1[i].br().y-facesArray1[i].tl().y));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    iv_imageview1.setVisibility(View.VISIBLE);
+                    iv_imageview1.setImageBitmap(bitmap1);
+                }
+            });
+        }
+
+
+        isJiance=true;
     }
 
     //Mat 类型相似度比较
