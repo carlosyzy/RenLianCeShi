@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zongyuanyang.renlianceshi.activity.CameraActivity">
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/jcv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+   <LinearLayout
+       android:layout_width="100dp"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:background="@color/gray_green1"
+       android:id="@+id/linearLayout">
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="检测结果:"
+           android:background="@color/gray_green"
+           android:padding="5dp"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@color/white"/>
+       <ListView
+           android:id="@+id/listview_camera"
+           android:layout_width="95dp"
+           android:layout_height="match_parent"
+           android:scrollbars="none"
+
+          />
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="24dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:background="@mipmap/zuo"
+        android:id="@+id/linearLayout3">
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:text="帮助"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:clickable="true"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="75dp"
+        android:orientation="vertical"
+        android:background="@color/gray_green"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:onClick="bt_faceDetect">
+        <ImageView
+            android:id="@+id/iv_jiance"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/jiance"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/tv_jiance"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:text="检测中···"
+            android:textSize="10dp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -37,10 +37,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DiscernActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+        <activity
+            android:name=".test.DiscernActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".activity.CameraActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
     </application>
 
 </manifest>

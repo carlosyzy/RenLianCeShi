@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 
 import com.example.zongyuanyang.renlianceshi.R;
+import com.example.zongyuanyang.renlianceshi.Utils.OpanCVUtils;
+import com.example.zongyuanyang.renlianceshi.test.DiscernActivity;
 
 /**
  * zongyuan.yang 2017.10.31  面部识别主界面
@@ -34,13 +36,19 @@ public class HomeActivity extends Activity implements View.OnClickListener{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        OpanCVUtils.getInstance().initOpenCV(this);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_sousuo:   //打开本地相机
 //                Intent intent = new Intent(
 //                        android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //                startActivityForResult(intent, 2);// 打开照相机
-                startActivity(new Intent(this,DiscernActivity.class));
+                startActivity(new Intent(this,CameraActivity.class));
                 break;
         }
     }

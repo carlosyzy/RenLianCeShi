@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="70dp">
+   <ImageView
+       android:id="@+id/iv_item_camera_face"
+       android:layout_width="70dp"
+       android:layout_height="70dp"
+       android:background="@color/gray"
+       android:layout_margin="2dp"/>
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_item_face_discern"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="识别"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:layout_margin="2dp"
+            android:background="@color/gray_green2"
+            android:clickable="true"/>
+        <TextView
+            android:id="@+id/tv_item_face_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="删除"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:layout_margin="2dp"
+            android:background="@color/gray_green2"
+            android:clickable="true"
+            />
+
+    </LinearLayout>
+</LinearLayout>
