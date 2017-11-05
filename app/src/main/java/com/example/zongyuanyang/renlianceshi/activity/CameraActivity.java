@@ -55,11 +55,6 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     private TextView tv_jiance;
 
 
-
-    private ArrayList<Bitmap> ceshi=new ArrayList<>();
-    private ListView listview_camera1;
-    private CameraFacesAdapter cameraFacesAdapter1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,18 +76,6 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         openCvCameraView = (JavaCameraView) findViewById(R.id.jcv);
         openCvCameraView.setCvCameraViewListener(this);
         openCvCameraView.enableView();
-
-
-
-
-
-        listview_camera1 = (ListView) findViewById(R.id.listview_camera1);
-        cameraFacesAdapter1 = new CameraFacesAdapter(this);
-
-        ceshi= DetectUtils.getInstans().loadImag(this);
-        cameraFacesAdapter1.setList(ceshi);
-        listview_camera1.setAdapter(cameraFacesAdapter1);
-
 
     }
 
