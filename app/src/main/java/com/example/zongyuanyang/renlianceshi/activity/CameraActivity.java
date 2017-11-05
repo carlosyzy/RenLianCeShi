@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.zongyuanyang.renlianceshi.R;
+import com.example.zongyuanyang.renlianceshi.Utils.DetectUtils;
 import com.example.zongyuanyang.renlianceshi.Utils.OpanCVUtils;
 import com.example.zongyuanyang.renlianceshi.myAdapter.CameraFacesAdapter;
 
@@ -47,11 +48,17 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     private boolean isDetect = false;  //是否正在进行头像检测
     private JavaCameraView openCvCameraView;
     private ListView listview_camera;
-    private ArrayList<Bitmap> face_arrayleist = new ArrayList<>();
+    private ArrayList<Bitmap> face_arraylist = new ArrayList<>();
     private CameraFacesAdapter cameraFacesAdapter;
     private ImageView iv_jiance;
     private Animation circle_anim;
     private TextView tv_jiance;
+
+
+
+    private ArrayList<Bitmap> ceshi=new ArrayList<>();
+    private ListView listview_camera1;
+    private CameraFacesAdapter cameraFacesAdapter1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,19 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         openCvCameraView = (JavaCameraView) findViewById(R.id.jcv);
         openCvCameraView.setCvCameraViewListener(this);
         openCvCameraView.enableView();
+
+
+
+
+
+        listview_camera1 = (ListView) findViewById(R.id.listview_camera1);
+        cameraFacesAdapter1 = new CameraFacesAdapter(this);
+
+        ceshi= DetectUtils.getInstans().loadImag(this);
+        cameraFacesAdapter1.setList(ceshi);
+        listview_camera1.setAdapter(cameraFacesAdapter1);
+
+
     }
 
     @Override
@@ -108,7 +128,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         if (faceCount > 0) {  //表明当前摄像机可能检测到了人脸图像
             if (!isDetect) {   //当前没有进行人脸检测--进行摄像机中人脸的检测
-                face_arrayleist.clear();
+                face_arraylist.clear();
                 isDetect = true;
                 fadeDetection1(inputFrame);
             }
@@ -162,7 +182,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         //提取人脸
         final Bitmap bitmap_face = Bitmap.createBitmap(bitmap, (int) (point1.x), (int) (point1.y),
                 (int) (point2.x - point1.x), (int) (point2.y - point1.y));
-        face_arrayleist.add(bitmap_face);
+        face_arraylist.add(bitmap_face);
 
     }
 
@@ -170,7 +190,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                cameraFacesAdapter.setList(face_arrayleist);
+                cameraFacesAdapter.setList(face_arraylist);
                 listview_camera.setAdapter(cameraFacesAdapter);
             }
         });
@@ -181,8 +201,8 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
      */
     public void bt_faceDetect(View view) {
         isDetect = false;
-        face_arrayleist.clear();
-        cameraFacesAdapter.setList(face_arrayleist);
+        face_arraylist.clear();
+        cameraFacesAdapter.setList(face_arraylist);
         cameraFacesAdapter.notifyDataSetChanged();
         iv_jiance.startAnimation(circle_anim);
         tv_jiance.setText("检测中···");

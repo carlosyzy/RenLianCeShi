@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zongyuanyang.renlianceshi.R;
+import com.example.zongyuanyang.renlianceshi.Utils.DetectUtils;
 import com.example.zongyuanyang.renlianceshi.activity.CameraActivity;
 
 import org.opencv.android.Utils;
@@ -70,19 +71,7 @@ public class CameraFacesAdapter extends BaseAdapter {
         viewHolder.getfacediscern().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(mContent,"此功能尚未解锁，请等待",Toast.LENGTH_SHORT).show();
-                //CameraActivity.AA(mList.get(i));
-                Mat mat1 = new Mat(mList.get(i).getWidth(),mList.get(i).getHeight(), CvType.CV_8UC4);
-                Utils.bitmapToMat(mList.get(i), mat1);
-
-
-
-                Mat srcMat = new Mat();
-                Imgproc.cvtColor(mat1, srcMat, Imgproc.COLOR_BGR2GRAY);
-                srcMat.convertTo(srcMat, CvType.CV_32F);
-
-                double target = Imgproc.compareHist(srcMat, srcMat, Imgproc.CV_COMP_CORREL);
-                Log.e("aaaa", "相似度 ：   ==" + target);
+                DetectUtils.getInstans().compare_similar1(mList.get(i));
             }
         });
         //删除按钮的点击事件

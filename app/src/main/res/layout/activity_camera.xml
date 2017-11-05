@@ -36,7 +36,33 @@
 
           />
    </LinearLayout>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/gray_green1"
+        android:id="@+id/linearLayout1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/linearLayout3"
+        android:layout_toEndOf="@+id/linearLayout3">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="检测结果:"
+            android:background="@color/gray_green"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"/>
+        <ListView
+            android:id="@+id/listview_camera1"
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
 
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="24dp"
         android:layout_height="100dp"
