@@ -29,6 +29,10 @@ import java.util.ArrayList;
  */
 
 public class DetectUtils {
+    // 设置想要的大小
+    private int newWidth = 200;
+    private int newHeight = 200;
+
     private static DetectUtils detectUtils;
     public static DetectUtils getInstans(){
         if (detectUtils==null){
@@ -139,9 +143,7 @@ public class DetectUtils {
 
 
         //重置图片的大小
-        // 设置想要的大小
-        int newWidth = 200;
-        int newHeight = 200;
+
         // 计算缩放比例
         float scaleWidth = ((float) newWidth) / bitmap_face.getWidth();
         float scaleHeight = ((float) newHeight) / bitmap_face.getHeight();
